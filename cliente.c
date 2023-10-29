@@ -16,8 +16,10 @@ int main(int argc, char *argv[]) {
 	char *host;
 	struct mensagem_t mensagem;
 	char msg [TAM_MSG];
-
+	
 	unsigned int i;
+
+	unsigned int seq;
 
 	if(argc != 3) {
 		puts("Uso correto: <cliente> <nome-servidor> <porta>");
@@ -47,15 +49,33 @@ int main(int argc, char *argv[]) {
 		puts("Nao consegui mandar os dados"); 
 		exit(1);
 	}
-
+	seq = 0;
+	ssize_t bytes_recebidos;
 	while (mensagem.tipo != FIM) {
-		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
+		//printf("TESTEEEE\n");
+		bytes_recebidos=recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i); 
+			
+		//QUANDO ELE TRAVA ELE NAO IMPRIME ESSE TESTE MAS IMPRIME O DE CIMA 
+		//É O RECVFROM QUE ESTA TRAVANDO, COM 4 NO SERVIDOR FUNCIONA SEMPRE
+		//printf("TESTEEEE\n");
+
+		//If para ver se ele nao recebeu nada provavelmente a comunicaçoa de ida nao deu certo,
+		//dai reenvia
+		if(bytes_recebidos < 0){
+			sendto(sockdescr, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &sa, sizeof sa);
+		}
 		interpreta_mensagem (&mensagem, msg);
+		fprintf(stderr,"mensagem.tipo = %d\n", mensagem.tipo);
+
 		if (mensagem.tipo == ADICIONADO) {
 			fprintf (stderr, "TESTE\n");
 		}
 		else if (mensagem.tipo == DADOS) {
 			fprintf (stderr, "%s", mensagem.dados);
+		}
+		seq++;
+		if (seq==16){
+			seq=0;
 		}
 	}
 

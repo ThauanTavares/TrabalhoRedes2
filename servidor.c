@@ -107,6 +107,10 @@ int main ( int argc, char *argv[] ) {
 		envia_dados (s, msg);
 
 		seq++;
+		if (seq==16){
+			seq=0;
+		}
+		
 	}
 	fclose (arq);
 
