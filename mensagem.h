@@ -23,3 +23,4 @@ void interpreta_mensagem (struct mensagem_t *mensagem, char msg[TAM_MSG]);
 void constroi_ENTRAR (struct mensagem_t *mensagem, char msg[TAM_MSG]);
 void constroi_ADICIONADO (struct mensagem_t *mensagem, char msg[TAM_MSG]);
 void constroi_FIM (struct mensagem_t *mensagem, char msg[TAM_MSG], int seq);
+int seq_valida (unsigned int seq, unsigned int *seq_esperada);

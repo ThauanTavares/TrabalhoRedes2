@@ -18,9 +18,9 @@ void adiciona_cliente(int s, struct sockaddr_in *cliente, struct mensagem_t mens
 		clientes[quant_clientes] = *cliente;
 		quant_clientes++;
 
-		// constroi_ADICIONADO (&mensagem, msg);
-		// unsigned int tam = sizeof(*clientes);
-		// sendto (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) clientes, tam);
+		constroi_ADICIONADO (&mensagem, msg);
+		unsigned int tam = sizeof(*cliente);
+		sendto (s, msg, TAM_MSG, MSG_CONFIRM, (struct sockaddr *) cliente, tam);
 	}
 	// else {
     //   sleep(3);
@@ -37,6 +37,7 @@ void envia_dados (int s, char msg [TAM_MSG]) {
 	for (int i = 0; i < quant_clientes; i++) {
 		tam = sizeof(clientes[i]);
 		sendto (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &clientes[i], tam);
+		printf ("adicionado\n");
 	}
 
 	return;
@@ -94,10 +95,9 @@ int main ( int argc, char *argv[] ) {
 
 	seq = 0;
 	while (!feof (arq)) {
-		if (recvfrom (s, msg, 1, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
+		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
 			adiciona_cliente (s, &cliente, mensagem, msg);
 		}
-		sleep (intervalo);
 
 		fgets (mensagem.dados, TAM_DADOS, arq);
 		mensagem.tipo = DADOS;
@@ -107,10 +107,11 @@ int main ( int argc, char *argv[] ) {
 		envia_dados (s, msg);
 
 		seq++;
-		if (seq==16){
-			seq=0;
+		if (seq == 16){
+			seq = 0;
 		}
 		
+		sleep (intervalo);
 	}
 	fclose (arq);
 

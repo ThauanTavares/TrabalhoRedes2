@@ -68,3 +68,22 @@ void constroi_FIM (struct mensagem_t *mensagem, char msg[TAM_MSG], int seq) {
 
     return;
 }
+
+// confere se a sequencia é valida e atualiza a variavel
+int seq_valida (unsigned int seq, unsigned int *seq_esperada) {
+    if (seq > *seq_esperada) {
+        *seq_esperada = seq;
+        return 1;
+    }
+
+    if (seq == *seq_esperada) {
+        *seq_esperada = *seq_esperada + 1;
+        if (*seq_esperada == 16)
+            *seq_esperada = 0;
+
+        return 1;
+    }
+
+    // TESTAR CASO PERCA A SEQUENCIA 16 ou perto
+    return 0;
+}
