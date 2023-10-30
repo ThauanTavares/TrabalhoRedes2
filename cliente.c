@@ -10,8 +10,8 @@
 
 
 int main(int argc, char *argv[]) {  
-	int sockdescr, seq_esperada;
-	unsigned int i;
+	int sockdescr;
+	unsigned int i, seq_esperada;
 	struct sockaddr_in sa;
 	struct hostent *hp;
 	char *host;
@@ -57,25 +57,16 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	seq_esperada = -10;
+	seq_esperada = 0;
 	while (mensagem.tipo != FIM) {
 		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
 		interpreta_mensagem (&mensagem, msg);
-		if (seq_esperada == -10) {
-			seq_esperada = mensagem.sequencia;
-		}
 
 		//completar a seq_valida
 		if (mensagem.sequencia != seq_esperada)
-        	printf ("SEQ ERRADA\n");
+        	// printf ("SEQ ERRADA\n");
 		if ((mensagem.tipo == DADOS) && seq_valida(mensagem.sequencia, &seq_esperada)) {
-			fprintf (stderr, "%s", mensagem.dados);
-		}
-		
-		if (mensagem.sequencia == 4) {
-			printf ("finalizando\n");
-			close (sockdescr);
-			return 0;
+			// fprintf (stderr, "%s", mensagem.dados);
 		}
 	}
 

@@ -106,7 +106,7 @@ int main ( int argc, char *argv[] ) {
 
 	sleep (3);
 
-	seq = 0;
+	seq = 1555;
 	while (!feof (arq)) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
 			adiciona_cliente (s, &cliente, clientes, &quant_clientes);
@@ -119,10 +119,7 @@ int main ( int argc, char *argv[] ) {
 		
 		envia_dados (s, msg, clientes, quant_clientes);
 
-		seq++;
-		if (seq == 16){
-			seq = 0;
-		}
+		// seq++;
 		
 		sleep (intervalo);
 	}
