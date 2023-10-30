@@ -9,35 +9,37 @@
 #include "mensagem.h"
 
 
-struct sockaddr_in clientes[MAX_CLIENTES];
-unsigned int quant_clientes = 0;
 
-void adiciona_cliente(int s, struct sockaddr_in *cliente, struct mensagem_t mensagem, char msg[TAM_MSG]) {
+void adiciona_cliente(int s, struct sockaddr_in *cliente, struct sockaddr_in clientes[MAX_CLIENTES], unsigned int *quant_clientes) {
+	struct mensagem_t mensagem;
+	char msg[TAM_MSG];
+	int res;
+	unsigned int tam = sizeof (*cliente);
 
-	if (quant_clientes < MAX_CLIENTES) {
-		clientes[quant_clientes] = *cliente;
-		quant_clientes++;
-
+	if (*quant_clientes < MAX_CLIENTES) {
 		constroi_ADICIONADO (&mensagem, msg);
-		unsigned int tam = sizeof(*cliente);
-		sendto (s, msg, TAM_MSG, MSG_CONFIRM, (struct sockaddr *) cliente, tam);
-	}
-	// else {
-    //   sleep(3);
 
-	// 	sendto (s, "Servidor lotado\n", TAM_MSG, 0, (struct sockaddr *) cliente, sizeof(*cliente));
-	// 	fprintf (stderr, "lotado\n");
-	// }
+		// se conseguir enviar mensagem para o cliente adiciona ele
+		res = sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) cliente, tam);
+		if (res > 0) {
+			clientes[*quant_clientes] = *cliente;
+			*quant_clientes = *quant_clientes + 1;
+		}
+	}
+	else {
+		constroi_LOTADO (&mensagem, msg);
+		sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) cliente, tam);
+	}
+
 	return;
 }
 
-void envia_dados (int s, char msg [TAM_MSG]) {
-	
-	unsigned int tam; 
+void envia_dados (int s, char msg [TAM_MSG], struct sockaddr_in clientes[MAX_CLIENTES], unsigned int quant_clientes) {
+	unsigned int tam;
+
 	for (int i = 0; i < quant_clientes; i++) {
 		tam = sizeof(clientes[i]);
-		sendto (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &clientes[i], tam);
-		printf ("adicionado\n");
+		sendto (s, msg, TAM_MSG, MSG_CONFIRM, (struct sockaddr *) &clientes[i], tam);
 	}
 
 	return;
@@ -45,12 +47,14 @@ void envia_dados (int s, char msg [TAM_MSG]) {
 
 int main ( int argc, char *argv[] ) {
 	int s, intervalo;
-	unsigned int i, seq;
-	struct sockaddr_in servidor, cliente;
-	struct hostent *hp;
+	unsigned int i, seq, quant_clientes;
 	char localhost [MAXHOSTNAME];
-	struct mensagem_t mensagem;
 	char msg[TAM_MSG];
+	
+	struct sockaddr_in servidor, cliente;
+	struct sockaddr_in clientes[MAX_CLIENTES];
+	struct hostent *hp;
+	struct mensagem_t mensagem;
 
 
 	if (argc != 3) {
@@ -90,13 +94,22 @@ int main ( int argc, char *argv[] ) {
 	FILE *arq;
 	arq = fopen ("./FLAXSAN.txt","r");
 
+	// roda uma vez o servidor para iniciar melhor
+	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));
 	recvfrom (s, msg, TAM_MSG, 0, (struct sockaddr *) &cliente, &i);
-	adiciona_cliente (s, &cliente, mensagem, msg);
+
+
+	// espera primeiro cliente para começar a transmissao
+	quant_clientes = 0;
+	recvfrom (s, msg, TAM_MSG, 0, (struct sockaddr *) &cliente, &i);
+	adiciona_cliente (s, &cliente, clientes, &quant_clientes);
+
+	sleep (3);
 
 	seq = 0;
 	while (!feof (arq)) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
-			adiciona_cliente (s, &cliente, mensagem, msg);
+			adiciona_cliente (s, &cliente, clientes, &quant_clientes);
 		}
 
 		fgets (mensagem.dados, TAM_DADOS, arq);
@@ -104,7 +117,7 @@ int main ( int argc, char *argv[] ) {
 		mensagem.sequencia = seq;
 		constroi_mensagem (mensagem, msg);
 		
-		envia_dados (s, msg);
+		envia_dados (s, msg, clientes, quant_clientes);
 
 		seq++;
 		if (seq == 16){
@@ -116,7 +129,7 @@ int main ( int argc, char *argv[] ) {
 	fclose (arq);
 
 	constroi_FIM (&mensagem, msg, seq);
-	envia_dados (s,msg);
+	envia_dados (s, msg, clientes, quant_clientes);
 
     return 0;
 }

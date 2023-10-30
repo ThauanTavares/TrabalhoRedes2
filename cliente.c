@@ -10,8 +10,8 @@
 
 
 int main(int argc, char *argv[]) {  
-	int sockdescr;
-	unsigned int i, seq_esperada;
+	int sockdescr, seq_esperada;
+	unsigned int i;
 	struct sockaddr_in sa;
 	struct hostent *hp;
 	char *host;
@@ -43,35 +43,43 @@ int main(int argc, char *argv[]) {
 
 
 	constroi_ENTRAR (&mensagem, msg);
-	if(sendto(sockdescr, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &sa, sizeof sa) != TAM_MSG){
+	if(sendto(sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, sizeof sa) != TAM_MSG){
 		puts("Nao consegui mandar os dados"); 
 		exit(1);
 	}
 
-	while (mensagem.tipo != ADICIONADO) {
-		if(recvfrom (sockdescr, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &sa, &i) < 0){
-			printf ("erro\n");
-			constroi_ENTRAR (&mensagem, msg);
-			sendto(sockdescr, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &sa, sizeof sa);
-			sleep (1);
-		}
-		else {
-			interpreta_mensagem (&mensagem, msg);
-		}
+
+	recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
+	interpreta_mensagem (&mensagem, msg);
+	if (mensagem.tipo == LOTADO) {
+		printf ("Servidor Lotado\n");
+		return 0;
 	}
 
-	seq_esperada = 0;
+
+	seq_esperada = -10;
 	while (mensagem.tipo != FIM) {
 		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
-		
 		interpreta_mensagem (&mensagem, msg);
+		if (seq_esperada == -10) {
+			seq_esperada = mensagem.sequencia;
+		}
+
 		//completar a seq_valida
-		if ((mensagem.tipo == DADOS) && seq_valida( mensagem.sequencia, &seq_esperada)) {
+		if (mensagem.sequencia != seq_esperada)
+        	printf ("SEQ ERRADA\n");
+		if ((mensagem.tipo == DADOS) && seq_valida(mensagem.sequencia, &seq_esperada)) {
 			fprintf (stderr, "%s", mensagem.dados);
 		}
 		
+		if (mensagem.sequencia == 4) {
+			printf ("finalizando\n");
+			close (sockdescr);
+			return 0;
+		}
 	}
 
 	close (sockdescr);
+
 	return 0;
 }
