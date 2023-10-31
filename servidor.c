@@ -92,7 +92,7 @@ int main ( int argc, char *argv[] ) {
  
 
 	FILE *arq;
-	arq = fopen ("./FLAXSAN.txt","r");
+	arq = fopen ("./teste.txt","r");
 
 	// roda uma vez o servidor para iniciar melhor
 	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));
@@ -106,7 +106,7 @@ int main ( int argc, char *argv[] ) {
 
 	sleep (3);
 
-	seq = 1555;
+	seq = 0;
 	while (!feof (arq)) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
 			adiciona_cliente (s, &cliente, clientes, &quant_clientes);
@@ -119,7 +119,9 @@ int main ( int argc, char *argv[] ) {
 		
 		envia_dados (s, msg, clientes, quant_clientes);
 
-		// seq++;
+		seq++;
+		if (seq == 256)
+			seq = 0;
 		
 		sleep (intervalo);
 	}

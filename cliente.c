@@ -62,11 +62,8 @@ int main(int argc, char *argv[]) {
 		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
 		interpreta_mensagem (&mensagem, msg);
 
-		//completar a seq_valida
-		if (mensagem.sequencia != seq_esperada)
-        	// printf ("SEQ ERRADA\n");
 		if ((mensagem.tipo == DADOS) && seq_valida(mensagem.sequencia, &seq_esperada)) {
-			// fprintf (stderr, "%s", mensagem.dados);
+			printf ("%s", mensagem.dados);
 		}
 	}
 

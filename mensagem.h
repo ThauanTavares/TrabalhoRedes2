@@ -1,5 +1,5 @@
 #define MAXHOSTNAME 30
-#define TAM_MSG 505
+#define TAM_MSG 502
 #define TAM_DADOS 500
 #define MAX_CLIENTES 50
 
@@ -13,7 +13,7 @@
 // estrutura da mensagem
 struct mensagem_t {
     unsigned int tipo : 3;
-    unsigned int sequencia;
+    unsigned int sequencia : 8;
     char dados[TAM_DADOS];
 } __attribute__((packed));
 
