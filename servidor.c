@@ -92,7 +92,7 @@ int main ( int argc, char *argv[] ) {
  
 
 	FILE *arq;
-	arq = fopen ("./teste.txt","r");
+	arq = fopen ("./FLAXSAN.txt","r");
 
 	// roda uma vez o servidor para iniciar melhor
 	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));

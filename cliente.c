@@ -10,7 +10,7 @@
 
 
 int main(int argc, char *argv[]) {  
-	int sockdescr;
+	int sockdescr, perdidos, fora_ordem;
 	unsigned int i, seq_esperada;
 	struct sockaddr_in sa;
 	struct hostent *hp;
@@ -57,17 +57,23 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	seq_esperada = 0;
+	seq_esperada = 5555;
+	perdidos = 0;
+	fora_ordem = 0;
 	while (mensagem.tipo != FIM) {
 		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
 		interpreta_mensagem (&mensagem, msg);
 
-		if ((mensagem.tipo == DADOS) && seq_valida(mensagem.sequencia, &seq_esperada)) {
+		if ((mensagem.tipo == DADOS) && confere_seq(mensagem.sequencia, &seq_esperada, &perdidos, &fora_ordem)) {
 			printf ("%s", mensagem.dados);
 		}
 	}
 
 	close (sockdescr);
+
+	printf ("\n\n");
+	printf ("Pacotes perdidos: %d\n", perdidos);
+	printf ("Pacotes fora de ordem: %d\n", fora_ordem);
 
 	return 0;
 }

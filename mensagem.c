@@ -76,9 +76,20 @@ void constroi_FIM (struct mensagem_t *mensagem, char msg[TAM_MSG], int seq) {
 }
 
 // confere se a sequencia é valida e atualiza a variavel
-int seq_valida (unsigned int seq, unsigned int *seq_esperada) {
-    if (seq > *seq_esperada) {
+int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, int *fora_ordem) {
+    if (*seq_esperada == 5555) {
         *seq_esperada = seq + 1;
+
+        return 1;
+    }
+    
+    if (seq > *seq_esperada) {
+        *perdidos = *perdidos + (seq - *seq_esperada);
+
+        *seq_esperada = seq + 1;
+        if (*seq_esperada == 256)
+            *seq_esperada = 0;
+
         return 1;
     }
 
@@ -90,10 +101,19 @@ int seq_valida (unsigned int seq, unsigned int *seq_esperada) {
         return 1;
     }
 
-    if ((*seq_esperada >= 250) && (seq <= 10)) {
+    if ((*seq_esperada >= 250) && (seq <= 5)) {
+        int diferenca = 256 - *seq_esperada;
+        *perdidos = *perdidos + (diferenca + seq);
+
         *seq_esperada = seq + 1;
+
         return 1;
     }
+
+    *fora_ordem = *fora_ordem + 1;
+    *perdidos = *perdidos - 1;
+
+    printf ("SEQ ERRADA\n");
 
     return 0;
 }
