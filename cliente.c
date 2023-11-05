@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
 	char *host;
 	struct mensagem_t mensagem;
 	char msg [TAM_MSG];
+	informacoes_t info_casa, info_fora;
 
 
 	if(argc != 3) {
@@ -60,12 +61,17 @@ int main(int argc, char *argv[]) {
 	seq_esperada = 5555;
 	perdidos = 0;
 	fora_ordem = 0;
+	inicializa_informacoes (&info_casa);
+	inicializa_informacoes (&info_fora);
 	while (mensagem.tipo != FIM) {
 		recvfrom (sockdescr, msg, TAM_MSG, 0, (struct sockaddr *) &sa, &i);
 		interpreta_mensagem (&mensagem, msg);
 
-		if ((mensagem.tipo == DADOS) && confere_seq(mensagem.sequencia, &seq_esperada, &perdidos, &fora_ordem)) {
-			printf ("%s", mensagem.dados);
+		if ((mensagem.tipo == DADOS)) {
+			atualiza_informacoes (&info_casa, &info_fora, mensagem);
+			if (confere_seq(mensagem.sequencia, &seq_esperada, &perdidos, &fora_ordem)) {
+				printf ("%s", mensagem.dados);
+			}
 		}
 	}
 
@@ -74,6 +80,10 @@ int main(int argc, char *argv[]) {
 	printf ("\n\n");
 	printf ("Pacotes perdidos: %d\n", perdidos);
 	printf ("Pacotes fora de ordem: %d\n", fora_ordem);
+
+	printf ("\n\n");
+	printf ("Informações do jogo!!!\n");
+	escreve_informacoes (info_casa, info_fora);
 
 	return 0;
 }

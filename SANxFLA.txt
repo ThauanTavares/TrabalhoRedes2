@@ -1,45 +1,45 @@
-1T| 00' - ROLAAAAA A BOLA!!! 
-1T| 05' - SANTOS   | GOOOOOOOOOOL  - Borges - 09 
-1T| 15' - SANTOS   | GOOOOOOOOOOL  - Borges - 09 
-1T| 20' - FLAMENGO | INCRIVEL GOL PERDIDOO  - Deivid - 10 
-1T| 25' - SANTOS   | GOOOOOOOOOOL  - Neymar - 10 
-1T| 28' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho - 10 
-1T| 30' - FLAMENGO | Cartão Amarelo para welington! 
-1T| 31' - FLAMENGO | GOOOOOOOOOOL  - Thiago Neves - 7 
-1T| 41' - SANTOS   | PENALTI PARA SANTOOOOOOOOS!!!!
-2T| 42' - FLAMENGO | Cartão Amarelo para Willians! 
-1T| 42' - SANTOS   | ELANO NA BOLAAAAA....
-1T| 42' - SANTOS   | PEEEERDEEEU O PENALTI!!!!
-1T| 44' - FLAMENGO | GOOOOOOOOOOL  - Deivid - 09 
-1T| 47' -       FIM DO PRIMEIRO TEMPO!!!
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
---------------------- INTERVALO -----------------
-2T| 00' - ROLAAAAA A BOLA PARA O SEGUNDO TEMPO!!! 
-2T| 00' - FLAMENGO | SUBSTITUIÇÃO - ENTRA David Braz | SAI Welington 
-2T| 05' - SANTOS   | GOOOOOOOOOOL  - Neymar - 10 
-2T| 07' - SANTOS   | Cartão Amarelo para Léo!
-2T| 09' - FLAMENGO | SUBSTITUIÇÃO - ENTRA Bottineli | SAI Luiz Antonio 
-2T| 34' - FLAMENGO | Cartão Amarelo para Thiago Neves! 
-2T| 21' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho Gaúcho - 10 
-2T| 34' - FLAMENGO | Cartão Amarelo para Renato! 
-2T| 34' - FLAMENGO | Cartão Amarelo para Bottineli! 
-2T| 35' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho Gaúcho - 10 
-2T| 38' - SANTOS   | SUBSTITUIÇÃO - ENTRA Alan Kardec | SAI Elano 
-2T| 38' - FLAMENGO | SUBSTITUIÇÃO - ENTRA Jean | SAI Deivid 
-2T| 46' - SANTOS   | Cartão Amarelo para Neymar!
-2T| 47' -           FIM DE JOGO!!! 
-VITORIA DO FLAMENGO POR 5x4!
+CX1 1T| 00' - ROLAAAAA A BOLA!!!
+GA1 1T| 05' - SANTOS   | GOOOOOOOOOOL  - Borges - 09 
+GA1 1T| 15' - SANTOS   | GOOOOOOOOOOL  - Borges - 09 
+XB1 1T| 20' - FLAMENGO | INCRIVEL GOL PERDIDOO  - Deivid - 10 
+GA1 1T| 25' - SANTOS   | GOOOOOOOOOOL  - Neymar - 10 
+GB1 1T| 28' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho - 10 
+AB1 1T| 30' - FLAMENGO | Cartão Amarelo para welington! 
+GB1 1T| 31' - FLAMENGO | GOOOOOOOOOOL  - Thiago Neves - 7 
+PA1 1T| 41' - SANTOS   | PENALTI PARA SANTOOOOOOOOS!!!!
+AB1 2T| 42' - FLAMENGO | Cartão Amarelo para Willians! 
+XA1 1T| 42' - SANTOS   | ELANO NA BOLAAAAA....
+XA1 1T| 42' - SANTOS   | PEEEERDEEEU O PENALTI!!!!
+GB1 1T| 44' - FLAMENGO | GOOOOOOOOOOL  - Deivid - 09 
+FX1 1T| 47' -       FIM DO PRIMEIRO TEMPO!!!
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+IXX --------------------- INTERVALO -----------------
+CX2 2T| 00' - ROLAAAAA A BOLA PARA O SEGUNDO TEMPO!!! 
+SB2 2T| 00' - FLAMENGO | SUBSTITUIÇÃO - ENTRA David Braz | SAI Welington 
+GA2 2T| 05' - SANTOS   | GOOOOOOOOOOL  - Neymar - 10 
+AA2 2T| 07' - SANTOS   | Cartão Amarelo para Léo!
+SB2 2T| 09' - FLAMENGO | SUBSTITUIÇÃO - ENTRA Bottineli | SAI Luiz Antonio 
+AB2 2T| 34' - FLAMENGO | Cartão Amarelo para Thiago Neves! 
+GB2 2T| 21' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho Gaúcho - 10 
+AB2 2T| 34' - FLAMENGO | Cartão Amarelo para Renato! 
+AB2 2T| 34' - FLAMENGO | Cartão Amarelo para Bottineli! 
+GB2 2T| 35' - FLAMENGO | GOOOOOOOOOOL  - Ronaldinho Gaúcho - 10 
+SA2 2T| 38' - SANTOS   | SUBSTITUIÇÃO - ENTRA Alan Kardec | SAI Elano 
+SB2 2T| 38' - FLAMENGO | SUBSTITUIÇÃO - ENTRA Jean | SAI Deivid 
+AA2 2T| 46' - SANTOS   | Cartão Amarelo para Neymar!
+FX2 2T| 47' -           FIM DE JOGO!!! 
+XXX VITORIA DO FLAMENGO POR 5x4!

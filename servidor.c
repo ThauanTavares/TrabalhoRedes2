@@ -92,7 +92,7 @@ int main ( int argc, char *argv[] ) {
  
 
 	FILE *arq;
-	arq = fopen ("./FLAXSAN.txt","r");
+	arq = fopen ("./SANxFLA.txt","r");
 
 	// roda uma vez o servidor para iniciar melhor
 	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));
@@ -111,6 +111,10 @@ int main ( int argc, char *argv[] ) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
 			adiciona_cliente (s, &cliente, clientes, &quant_clientes);
 		}
+
+		mensagem.info = getc (arq); 
+		mensagem.equipe = getc (arq); 
+		mensagem.metade = getc (arq);
 
 		fgets (mensagem.dados, TAM_DADOS, arq);
 		mensagem.tipo = DADOS;
