@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <arpa/inet.h>
 #include "mensagem.h"
 
 
@@ -67,14 +66,12 @@ int main ( int argc, char *argv[] ) {
 
 	gethostname (localhost, MAXHOSTNAME);
 
-	struct in_addr addr;
-	inet_aton("192.168.0.138", &addr);
-	if ((hp = gethostbyaddr( &addr, sizeof(addr), AF_INET)) == NULL){
+	if ((hp = gethostbyname (localhost)) == NULL){
 		puts ("Nao consegui meu proprio IP");
 		exit (1);
 	}
 
-	// fprintf (stderr, "Meu nome: %s\n", hp->h_name);
+	fprintf (stderr, "Meu nome: %s\n", hp->h_name);
 	
 	servidor.sin_port = htons(atoi(argv[1]));
 
