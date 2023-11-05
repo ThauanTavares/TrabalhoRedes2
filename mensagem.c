@@ -83,12 +83,14 @@ void constroi_FIM (struct mensagem_t *mensagem, char msg[TAM_MSG], int seq) {
 
 // confere se a sequencia é valida e atualiza a variavel
 int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, int *fora_ordem) {
+    // testa se sequencia ja foi inicializada corretamente
     if (*seq_esperada == 5555) {
         *seq_esperada = seq + 1;
 
         return 1;
     }
     
+    // seq maior igual pacore perdido
     if (seq > *seq_esperada) {
         *perdidos = *perdidos + (seq - *seq_esperada);
 
@@ -107,6 +109,7 @@ int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, in
         return 1;
     }
 
+    // faixa de teste caso perca um dos ultimos pacotes a sequencia resetaria
     if ((*seq_esperada >= 250) && (seq <= 5)) {
         int diferenca = 256 - *seq_esperada;
         *perdidos = *perdidos + (diferenca + seq);
@@ -116,6 +119,7 @@ int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, in
         return 1;
     }
 
+    // seq recebida é menor entao o pacote chegou fora de ordem
     *fora_ordem = *fora_ordem + 1;
     *perdidos = *perdidos - 1;
 
@@ -138,6 +142,7 @@ void inicializa_informacoes (informacoes_t *info) {
     return;
 }
 
+// atualiza contador referente ao tipo de infromação recebida
 void atualiza_informacoes (informacoes_t *info_casa, informacoes_t *info_fora, struct mensagem_t mensagem) {
     if (mensagem.equipe == TIME_CASA) {
         if (mensagem.info == GOL) {
@@ -196,6 +201,9 @@ void atualiza_informacoes (informacoes_t *info_casa, informacoes_t *info_fora, s
 }
 
 void escreve_informacoes (informacoes_t info_casa, informacoes_t info_fora) {
+    printf ("\n\n");
+	printf ("Informações do jogo!!!\n");
+    
     printf ("Gols:\n");
     printf ("Primeiro tempo: %dx%d\n", info_casa.gols1, info_fora.gols1);
     printf ("Segundo tempo: %dx%d\n", info_casa.gols2, info_fora.gols2);

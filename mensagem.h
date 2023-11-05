@@ -19,7 +19,7 @@
 #define PENALTI 'P'
 #define FALTA_PERIGOSA 'T'  // Tiro livre
 #define INICIO 'C'          // Comeco
-#define FIM_TEMPO 'F'        // Fim
+#define FIM_TEMPO 'F'       // Fim
 #define VITORIA 'W'         // Win
 #define COMENTARIO 'X'      // comentario qualquer
 

@@ -46,7 +46,7 @@ void envia_dados (int s, char msg [TAM_MSG], struct sockaddr_in clientes[MAX_CLI
 }
 
 int main ( int argc, char *argv[] ) {
-	int s, intervalo;
+	int s, intervalo, total_pacotes;
 	unsigned int i, seq, quant_clientes;
 	char localhost [MAXHOSTNAME];
 	char msg[TAM_MSG];
@@ -107,6 +107,7 @@ int main ( int argc, char *argv[] ) {
 	sleep (3);
 
 	seq = 0;
+	total_pacotes = 0;
 	while (!feof (arq)) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
 			adiciona_cliente (s, &cliente, clientes, &quant_clientes);
@@ -122,6 +123,7 @@ int main ( int argc, char *argv[] ) {
 		constroi_mensagem (mensagem, msg);
 		
 		envia_dados (s, msg, clientes, quant_clientes);
+		total_pacotes++;
 
 		seq++;
 		if (seq == 256)
@@ -133,6 +135,8 @@ int main ( int argc, char *argv[] ) {
 
 	constroi_FIM (&mensagem, msg, seq);
 	envia_dados (s, msg, clientes, quant_clientes);
+
+	printf ("Pacotes enviados: %d\n", total_pacotes);
 
     return 0;
 }
