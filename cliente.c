@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <arpa/inet.h>
 #include "mensagem.h"
 
 
@@ -26,7 +27,9 @@ int main(int argc, char *argv[]) {
 
 	host = argv[1];
 
-	if((hp = gethostbyname(host)) == NULL){
+	struct in_addr addr;
+	inet_aton("192.168.0.138", &addr);
+	if ((hp = gethostbyaddr( &addr, sizeof(addr), AF_INET)) == NULL){
 		puts("Nao consegui obter endereco IP do servidor.");
 		exit(1);
 	}
