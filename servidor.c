@@ -24,6 +24,8 @@ void adiciona_cliente(int s, struct sockaddr_in *cliente, struct sockaddr_in cli
 		if (res > 0) {
 			clientes[*quant_clientes] = *cliente;
 			*quant_clientes = *quant_clientes + 1;
+			printf ("\nCliente entrou na transmissão\n");
+			printf ("Total de clientes: %d\n", *quant_clientes);
 		}
 	}
 	else {
@@ -41,6 +43,8 @@ void envia_dados (int s, char msg [TAM_MSG], struct sockaddr_in clientes[MAX_CLI
 		tam = sizeof(clientes[i]);
 		sendto (s, msg, TAM_MSG, MSG_CONFIRM, (struct sockaddr *) &clientes[i], tam);
 	}
+
+	printf ("Mensagem enviada para %d clientes\n", quant_clientes);
 
 	return;
 }
@@ -71,7 +75,7 @@ int main ( int argc, char *argv[] ) {
 		exit (1);
 	}
 
-	fprintf (stderr, "Meu nome: %s\n", hp->h_name);
+	printf ("Meu nome: %s\n", hp->h_name);
 	
 	servidor.sin_port = htons(atoi(argv[1]));
 
@@ -94,11 +98,14 @@ int main ( int argc, char *argv[] ) {
 	FILE *arq;
 	arq = fopen ("./SANxFLA.txt","r");
 
+	printf ("\\nIniciando Servidor\n\n");
+
 	// roda uma vez o servidor para iniciar melhor
 	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));
 	recvfrom (s, msg, TAM_MSG, 0, (struct sockaddr *) &cliente, &i);
 
 
+	printf ("Esperando primeiro cliente\n\n");
 	// espera primeiro cliente para começar a transmissao
 	quant_clientes = 0;
 	recvfrom (s, msg, TAM_MSG, 0, (struct sockaddr *) &cliente, &i);
@@ -106,7 +113,7 @@ int main ( int argc, char *argv[] ) {
 
 	sleep (3);
 
-	seq = 0;
+	seq = 1;
 	total_pacotes = 0;
 	while (!feof (arq)) {
 		if (recvfrom (s, msg, TAM_MSG, MSG_DONTWAIT, (struct sockaddr *) &cliente, &i) > 0) {
@@ -127,7 +134,7 @@ int main ( int argc, char *argv[] ) {
 
 		seq++;
 		if (seq == 256)
-			seq = 0;
+			seq = 1;
 		
 		sleep (intervalo);
 	}

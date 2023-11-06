@@ -90,13 +90,12 @@ int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, in
         return 1;
     }
     
-    // seq maior igual pacore perdido
+    // seq maior entao pacote perdido
     if (seq > *seq_esperada) {
         *perdidos = *perdidos + (seq - *seq_esperada);
-
         *seq_esperada = seq + 1;
         if (*seq_esperada == 256)
-            *seq_esperada = 0;
+            *seq_esperada = 1;
 
         return 1;
     }
@@ -104,7 +103,7 @@ int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, in
     if (seq == *seq_esperada) {
         *seq_esperada = *seq_esperada + 1;
         if (*seq_esperada == 256)
-            *seq_esperada = 0;
+            *seq_esperada = 1;
         
         return 1;
     }
@@ -122,8 +121,6 @@ int confere_seq (unsigned int seq, unsigned int *seq_esperada, int *perdidos, in
     // seq recebida é menor entao o pacote chegou fora de ordem
     *fora_ordem = *fora_ordem + 1;
     *perdidos = *perdidos - 1;
-
-    printf ("SEQ ERRADA\n");
 
     return 0;
 }
