@@ -44,8 +44,6 @@ void envia_dados (int s, char msg [TAM_MSG], struct sockaddr_in clientes[MAX_CLI
 		sendto (s, msg, TAM_MSG, MSG_CONFIRM, (struct sockaddr *) &clientes[i], tam);
 	}
 
-	printf ("Mensagem enviada para %d clientes\n", quant_clientes);
-
 	return;
 }
 
@@ -130,6 +128,7 @@ int main ( int argc, char *argv[] ) {
 		constroi_mensagem (mensagem, msg);
 		
 		envia_dados (s, msg, clientes, quant_clientes);
+		printf ("Mensagem enviada para %d clientes  --  %s\n", quant_clientes, mensagem.dados);
 		total_pacotes++;
 
 		seq++;
