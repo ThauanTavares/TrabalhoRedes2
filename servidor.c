@@ -96,7 +96,7 @@ int main ( int argc, char *argv[] ) {
 	FILE *arq;
 	arq = fopen ("./SANxFLA.txt","r");
 
-	printf ("\\nIniciando Servidor\n\n");
+	printf ("\nIniciando Servidor\n\n");
 
 	// roda uma vez o servidor para iniciar melhor
 	sendto (s, msg, TAM_MSG, 0, (struct sockaddr *) &servidor, sizeof(cliente));
